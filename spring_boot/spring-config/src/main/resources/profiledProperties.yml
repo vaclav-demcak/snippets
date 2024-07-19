@@ -1,0 +1,4 @@
+staticProperty : BRM
+
+dynamicEnvironment: default
+dynamicMessage: Default dynamic message

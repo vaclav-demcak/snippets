@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ *  ↄ⃝ COPYLEFT 2023 ALL BUGS RESERVED by ZaJo
+ *
+ *  Author: vaclav.demcak@gmail.com
+ */
+-->
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>vd.springboot.samples</groupId>
+  <artifactId>springboot-oracle</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <name>SpringBoot Oracle Driver Sample</name>
+  <description>SpringBoot Oracle Driver Sample (playground)</description>
+
+  <packaging>war</packaging>
+
+  <properties>
+    <!-- Source Encoding -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- Java Version -->
+    <jdk.version>1.8</jdk.version>
+    <maven.compiler.source>${jdk.version}</maven.compiler.source>
+    <maven.compiler.target>${jdk.version}</maven.compiler.target>
+
+    <maven.war.plugin.version>3.3.2</maven.war.plugin.version>
+    <maven.build.helper.plugin.version>3.3.0</maven.build.helper.plugin.version>
+    <maven.compiler.plugin.version>3.9.0</maven.compiler.plugin.version>
+
+    <!-- SpringBoot -->
+    <SpringBoot_Main_Class>vd.samples.springboot.oracle._Runner</SpringBoot_Main_Class>
+
+    <spring.boot.jasypt.starter.version>3.0.5</spring.boot.jasypt.starter.version>
+    <spring.boot.dependencies.version>2.7.2</spring.boot.dependencies.version>
+    <spring.boot.plugin.version>${spring.boot.dependencies.version}</spring.boot.plugin.version>
+    <springdoc-openapi-maven-plugin.version>1.4</springdoc-openapi-maven-plugin.version>
+    <springdoc.openapi.version>1.6.9</springdoc.openapi.version>
+    <swagger.v3.annotations>2.2.8</swagger.v3.annotations>
+    <swagger.v3.version>2.1.12</swagger.v3.version>
+
+<!--    <openapi-gen.version>6.4.0</openapi-gen.version>-->
+    <openapi-gen.version>6.6.0</openapi-gen.version>
+    <openapi.tools.version>0.2.6</openapi.tools.version>
+    <openapi.gen.base.package.name>vd.samples.springboot.oracle</openapi.gen.base.package.name>
+
+    <liquibase.version>4.9.1</liquibase.version>
+    <liquibase.plugin.version>${liquibase.version}</liquibase.plugin.version>
+
+    <oracle.driver.version>21.5.0.0</oracle.driver.version>
+
+    <org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
+
+  </properties>
+
+  <build>
+    <plugins>
+      <!-- https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-maven-plugin -->
+      <plugin>
+        <groupId>com.github.ulisesbocchio</groupId>
+        <artifactId>jasypt-maven-plugin</artifactId>
+        <version>3.0.5</version>
+      </plugin>
+      <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-maven-plugin -->
+      <plugin>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <jvmArguments>
+            -Dspringdoc.writer-with-default-pretty-printer=true
+          </jvmArguments>
+          <mainClass>${SpringBoot_Main_Class}</mainClass>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>build-info</goal>
+            </goals>
+            <id>build-info</id>
+          </execution>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+        <groupId>org.springframework.boot</groupId>
+        <version>${spring.boot.plugin.version}</version>
+      </plugin>
+      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-war-plugin -->
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>${maven.war.plugin.version}</version>
+      </plugin>
+      <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-maven-plugin -->
+      <plugin>
+        <artifactId>liquibase-maven-plugin</artifactId>
+        <groupId>org.liquibase</groupId>
+        <version>${liquibase.plugin.version}</version>
+      </plugin>
+      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.compiler.plugin.version}</version>
+        <configuration>
+          <generatedSourcesDirectory>${project.build.directory}/swagger</generatedSourcesDirectory>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>${org.mapstruct.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+      <!-- https://mvnrepository.com/artifact/org.openapitools/openapi-generator-maven-plugin -->
+      <plugin>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+        <groupId>org.openapitools</groupId>
+        <version>${openapi-gen.version}</version>
+        <executions>
+          <execution>
+            <configuration>
+              <!-- https://openapi-generator.tech/docs/generators/spring -->
+              <additionalProperties>
+                <additionalProperty>serviceInterface=true</additionalProperty>
+                <additionalProperty>serviceImplementation=false</additionalProperty>
+                <additionalProperty>swaggerAnnotations=true</additionalProperty>
+                <additionalProperty>enumPropertyNaming=UPPERCASE</additionalProperty>
+                <additionalProperty>useBeanValidation=true</additionalProperty>
+              </additionalProperties>
+<!--              https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-maven-plugin/src/main/java/org/openapitools/codegen/plugin/CodeGenMojo.java -->
+              <openapiNormalizer>REF_AS_PARENT_IN_ALLOF=true</openapiNormalizer>
+              <apiPackage>${openapi.gen.base.package.name}.api</apiPackage>
+              <configOptions>
+                <interfaceOnly>true</interfaceOnly>
+                <oa3>true</oa3>
+                <sourceFolder>swagger</sourceFolder>
+                <unhandledException>true</unhandledException>
+                <useOneOfInterfaces>true</useOneOfInterfaces>
+                <useSpringController>true</useSpringController>
+                <useSpringfox>false</useSpringfox>
+                <useTags>true</useTags>
+                <!--                <java8>true</java8>-->
+                <!--                <dateLibrary>java8</dateLibrary>-->
+              </configOptions>
+
+              <ignoreFileOverride>${project.basedir}/.openapi-generator-ignore</ignoreFileOverride>
+              <generateApiDocumentation>true</generateApiDocumentation>
+              <generateApiTests>false</generateApiTests>
+              <generateModelDocumentation>true</generateModelDocumentation>
+
+              <!--              <templateDirectory>${project.basedir}/api-definition/JavaSpring</templateDirectory>-->
+              <generateModelTests>false</generateModelTests>
+              <generateSupportingFiles>true</generateSupportingFiles>
+              <generatorName>spring</generatorName>
+              <inputSpec>${project.basedir}/api-definition/app-api.yml</inputSpec>
+              <modelNameSuffix>Dto</modelNameSuffix>
+              <modelPackage>${openapi.gen.base.package.name}.model</modelPackage>
+              <output>${project.build.directory}</output>
+              <packageName>${openapi.gen.base.package.name}</packageName>
+
+              <!--              TODO: change for true in future-->
+              <skipIfSpecIsUnchanged>false</skipIfSpecIsUnchanged>
+
+              <skipOverwrite>false</skipOverwrite>
+
+            </configuration>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <id>gen_sample-rest-api</id>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <artifactId>spring-boot-starter-web-services</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
+
+    <!-- Property password crypt -->
+    <!-- https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter -->
+    <dependency>
+      <groupId>com.github.ulisesbocchio</groupId>
+      <artifactId>jasypt-spring-boot-starter</artifactId>
+      <version>${spring.boot.jasypt.starter.version}</version>
+    </dependency>
+
+
+    <!-- Database -->
+    <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-core -->
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>${liquibase.version}</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>hibernate-core</artifactId>
+      <groupId>org.hibernate</groupId>
+    </dependency>
+
+    <dependency>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <groupId>org.hibernate</groupId>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8 -->
+    <dependency>
+      <groupId>com.oracle.database.jdbc</groupId>
+      <artifactId>ojdbc8</artifactId>
+      <version>${oracle.driver.version}</version>
+    </dependency>
+
+
+    <!-- OpenAPI tools -->
+    <!-- https://mvnrepository.com/artifact/org.openapitools/jackson-databind-nullable -->
+    <dependency>
+      <artifactId>jackson-databind-nullable</artifactId>
+      <groupId>org.openapitools</groupId>
+      <version>${openapi.tools.version}</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>springdoc-openapi-ui</artifactId>
+      <groupId>org.springdoc</groupId>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger.parser.v3</groupId>
+      <artifactId>swagger-parser</artifactId>
+      <version>${swagger.v3.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>${swagger.v3.annotations}</version>
+    </dependency>
+
+    <!-- Mapstruct framework -->
+    <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
+    <dependency>
+      <artifactId>mapstruct</artifactId>
+      <groupId>org.mapstruct</groupId>
+      <version>${org.mapstruct.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor -->
+    <dependency>
+      <artifactId>mapstruct-processor</artifactId>
+      <groupId>org.mapstruct</groupId>
+      <scope>provided</scope>
+      <version>${org.mapstruct.version}</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>openapi-generator-maven-plugin</artifactId>
+      <groupId>org.openapitools</groupId>
+      <version>${openapi-gen.version}</version>
+    </dependency>
+
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Base SpringBoot Parent -->
+      <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies -->
+      <dependency>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <scope>import</scope>
+        <type>pom</type>
+        <version>${spring.boot.dependencies.version}</version>
+      </dependency>
+      <!-- OpenAPI 3 Doc -->
+      <dependency>
+        <artifactId>springdoc-openapi</artifactId>
+        <groupId>org.springdoc</groupId>
+        <scope>import</scope>
+        <type>pom</type>
+        <version>${springdoc.openapi.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+</project>

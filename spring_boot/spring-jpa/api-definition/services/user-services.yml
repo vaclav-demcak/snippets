@@ -1,0 +1,87 @@
+# This OpenAPI file is fragment and should not be distributed separately
+
+openapi: 3.0.3
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+
+tags:
+  - name: users
+    description: User Services API
+
+paths:
+  /users:
+    summary: Provides access to available users
+    get:
+      tags:
+        - users
+      summary: Get all users
+      description: Vyhladavanie je mozne robit viacerymi sposobmi
+      responses:
+        200:
+          description: Returns all users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '../components/users.yml#/components/schemas/UserResponse'
+
+    post:
+      tags:
+        - users
+      summary: Create user
+      parameters:
+        - in: query
+          name: user
+          description: Request to create User
+          required: true
+          schema:
+            $ref: '../components/users.yml#/components/schemas/CreateUserRequest'
+      responses:
+        201:
+          description: New user created
+          content:
+            application/json:
+              schema:
+                $ref: '../components/users.yml#/components/schemas/UserResponse'
+
+    delete:
+      tags:
+        - users
+      summary: Delete user
+      parameters:
+        - in: query
+          name: id
+          description: UserId for delete user
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Delete user success
+          content:
+            application/json:
+              schema:
+                type: boolean
+
+
+  /users/{firstName}:
+    get:
+      summary: Get the users with firstName
+      tags:
+        - users
+      parameters:
+        - in: path
+          name: userName
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Returns all found users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '../components/users.yml#/components/schemas/UserResponse'

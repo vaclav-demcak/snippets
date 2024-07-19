@@ -1,0 +1,11 @@
+server:
+  port: 8080
+spring:
+  jackson:
+    date-format: vd.sandbox.spring.openapi.aaa.invoker.RFC3339DateFormat
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+  security:
+    user:
+      name: spring
+      password: spring

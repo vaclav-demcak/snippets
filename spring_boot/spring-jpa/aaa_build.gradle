@@ -1,0 +1,81 @@
+/*
+ *  ↄ⃝ COPYLEFT 2020 ALL BUGS RESERVED by ZaJo.
+ */
+plugins {
+    id 'java-library'
+    id 'org.openapi.generator' version '4.3.0'
+    id 'org.springframework.boot' version '2.2.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+}
+
+description = 'SpringBoot JPA Sample'
+group = 'vd.sandbox.spring'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+    mavenLocal()
+}
+
+configurations.all {
+    exclude group: 'org.slf4j', module: 'slf4j-simple'
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+}
+
+dependencies {
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.13.0'
+    implementation("org.springframework.boot:spring-boot-starter-web:2.1.8.RELEASE")
+    api("io.springfox:springfox-swagger2:2.9.2")
+    api("io.springfox:springfox-swagger-ui:2.9.2")
+    api("org.openapitools:jackson-databind-nullable:0.1.0")
+    compile('org.springframework.boot:spring-boot-starter-log4j2')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-yaml')
+    compile('com.fasterxml.jackson.module:jackson-module-kotlin:2.7.3')
+    compile('org.openapitools:openapi-generator-gradle-plugin:4.3.0')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.mapstruct:mapstruct:1.3.1.Final')
+    annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version:'1.3.1.Final'
+
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+task buildSpring(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+    generatorName = "spring"
+    library = 'spring-boot'
+    inputSpec = "$projectDir/api-definition/swagger/api.yml".toString()
+    outputDir = "$buildDir/spring".toString()
+    apiPackage = "vd.sandbox.spring.jpa.api"
+    invokerPackage = "vd.sandbox.spring.jpa.invoker"
+    modelPackage = "vd.sandbox.spring.jpa.model"
+    modelNameSuffix = 'Dto'
+    ignoreFileOverride = "$projectDir/.openapi-generator-ignore".toString()
+    configOptions = [
+            configPackage          : 'vd.sandbox.spring.jpa.app.swagger',
+            dateLibrary            : 'java8',
+            java8                  : 'true',
+            hideGenerationTimestamp: 'true',
+            useTags                : 'true',
+            useBeanValidation      : 'false'
+    ]
+    systemProperties = [
+            modelDocs: "false"
+    ]
+    skipValidateSpec = true
+    logToStderr = true
+    generateAliasAsModel = false
+    enablePostProcessFile = false
+}
+
+compileJava.dependsOn(buildSpring)
+
+sourceSets.main.java.srcDirs = ['src/main/java',
+        "${buildDir}/generated/sources/annotationProcessor/java/main",
+        "$buildDir/spring/src/main/java"
+]

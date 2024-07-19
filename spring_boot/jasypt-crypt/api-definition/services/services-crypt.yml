@@ -1,0 +1,52 @@
+# This OpenAPI file is fragment and should not be distributed separately
+
+openapi: 3.0.3
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+
+tags:
+  - name: crypt
+    description: Crypt User's Credentials by a Service API
+
+paths:
+  /cryptUserCredentials/encrypt:
+    summary: Provides encryption functionality for User Credentials
+    patch:
+      operationId: encryptUserCredentials
+      tags:
+        - crypt
+      summary: Encrypt User Credentials
+      parameters:
+        - in: query
+          name: encryptUserCredentialsRequest
+          description: Request to encrypt the User credentials
+          required: true
+          schema:
+            $ref: '../components/components-crypt.yml#/components/schemas/UserCryptionRequest'
+      responses:
+        200:
+          description: User Credentials Encrypted
+          content:
+            application/json:
+              schema:
+                $ref: '../components/components-crypt.yml#/components/schemas/UserCryptionResponse'
+  /cryptUserCredentials/decrypt:
+    summary: Provides decryption functionality for User Credentials
+    patch:
+      operationId: decryptUserCredentials
+      tags:
+        - crypt
+      summary: Decrypt User Credentials
+      parameters:
+        - in: query
+          name: decryptUserCredentialsRequest
+          description: Request to decrypt the User credentials
+          required: true
+          schema:
+            $ref: '../components/components-crypt.yml#/components/schemas/UserCryptionRequest'
+      responses:
+        200:
+          description: User Credential Decrypted
+          content:
+            application/json:
+              schema:
+                $ref: '../components/components-crypt.yml#/components/schemas/UserCryptionResponse'

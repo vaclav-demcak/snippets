@@ -1,0 +1,70 @@
+# This OpenAPI file is fragment and should not be distributed separately
+
+openapi: 3.0.3
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+paths: { /: {get: {responses: { "418": { description: FRAGMENT } } } } }
+
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+        - message
+        - code
+      properties:
+        code:
+          type: string
+          description: 'Error code'
+        message:
+          type: string
+          description: 'The cause of the Error.'
+
+  responses:
+    400_BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    401_UnauthorizedError:
+      description: Authentication information is missing or invalid
+      headers:
+        WWW_Authenticate:
+          schema:
+            type: string
+    404_NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+      x-basicInfoFunc: app.basic_auth
+
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+    OpenID:
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
+
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://example.com/oauth/authorize
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            read: Grants read access
+            write: Grants write access
+            admin: Grants access to admin operations

@@ -1,0 +1,72 @@
+# This OpenAPI file is fragment and should not be distributed separately
+
+openapi: 3.0.3
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+paths: { /: { get: { responses: { "418": { description: FRAGMENT } } } } }
+
+components:
+  schemas:
+
+    UserCryptionRequest:
+      title: UserCryptionRequest
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/UserCredentials'
+        - type: object
+      required:
+        - secretSeed
+        - cryptAlgoritmType
+      properties:
+        secretSeed:
+          type: string
+          description: Secret Seed for Encryption algoritmus
+          example: 'nejaka_hlupa_fraza_na_kryptovanie_a_co_najdlhsia'
+        cryptAlgoritmType:
+          $ref: '#/components/schemas/CryptionAlgoritmType'
+
+    UserCryptionResponse:
+      title: UserCryptionResponse
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/UserCredentials'
+        - type: object
+      properties:
+        requestCryptType:
+          $ref: '#/components/schemas/CryptionType'
+        cryptAlgoritmType:
+          $ref: '#/components/schemas/CryptionAlgoritmType'
+
+    UserCredentials:
+      title: UserCredentials
+      description: Object User Credentials Base
+      required:
+        - userName
+        - password
+      discriminator:
+        propertyName: childType
+        mapping:
+          createRequest: '#/components/schemas/UserCryptionRequest'
+          userResponse: '#/components/schemas/UserCryptionResponse'
+      properties:
+        userName:
+          type: string
+          description: User's alias (or login) name
+          example: 'jtestersen or jtestersen@test.com (means e.g. John von Testersen)'
+        password:
+          type: string
+          description: User's password for login
+          example: '$tR0nG_pA55vv0Rd'
+
+    CryptionAlgoritmType:
+      title: CryptionAlgoritmType
+      type: string
+      enum:
+        - PBEWithMD5AndDES
+        - PBEWithMD5AndTripleDES
+
+    CryptionType:
+      title: CryptionType
+      type: string
+      enum:
+        - Decryption
+        - Encryption

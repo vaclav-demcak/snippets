@@ -1,0 +1,27 @@
+openapi: 3.0.3
+info:
+  title: API Citrus Services Documentation
+  description: Swagger dokumentacia k Servisom so zakladnymi Citrus testami
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/citrus/
+    description: API Citrus Services Documentation
+
+components:
+  securitySchemes:
+    basicAuth:
+      $ref: 'components/aaa-security.yml#/components/securitySchemes/BasicAuth'
+
+paths:
+  /v1/admin/services/info:
+    $ref: 'services/aaa-admin.yml#/paths/~1info'
+  /v1/admin/services/welcome:
+    $ref: 'services/aaa-admin.yml#/paths/~1welcome'
+  /v1/user/services/info:
+    $ref: 'services/aaa-user.yml#/paths/~1info'
+  /v1/user/services/welcome:
+    $ref: 'services/aaa-user.yml#/paths/~1welcome'
+  /v1/guest/services/info:
+    $ref: 'services/aaa-guest.yml#/paths/~1info'
+  /v1/guest/services/welcome:
+    $ref: 'services/aaa-guest.yml#/paths/~1welcome'

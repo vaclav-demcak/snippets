@@ -1,0 +1,10 @@
+server:
+  port: 8080
+spring:
+  profiles:
+    active: dev
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs

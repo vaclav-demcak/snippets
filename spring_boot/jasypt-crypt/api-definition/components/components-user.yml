@@ -1,0 +1,75 @@
+# This OpenAPI file is fragment and should not be distributed separately
+
+openapi: 3.0.3
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+paths: { /: { get: { responses: { "418": { description: FRAGMENT } } } } }
+
+components:
+  schemas:
+    CreateUserRequest:
+      title: CreateUserResponse
+      required:
+        - username
+        - password
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+
+    UserResponse:
+      title: UserResponse
+      required:
+        - id
+        - username
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+
+    User:
+      title: User
+      description: Object User Base
+      discriminator:
+        propertyName: childType
+        mapping:
+          createRequest: '#/components/schemas/CreateUserRequest'
+          userResponse: '#/components/schemas/UserResponse'
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Users's identifier
+          example: 1
+        dateTest:
+          type: string
+
+        validFrom:
+          type: string
+          format: 'date-time'
+          description: Record is valid from {date}
+          example: "2017-07-21T17:32:28Z"
+#          example: "2017-12-09"
+        userFirstName:
+          type: string
+          description: User First Name
+          example: John
+        userLastName:
+          type: string
+          description: User Last Name
+          example: Testersen
+        userMiddleName:
+          type: string
+          description: User Middle Name
+          example: von
+        userEmail:
+          type: string
+          format: email
+          description: User's email (shold be used for build username)
+          example: jtestersen@test.com
+        userName:
+          type: string
+          description: User's alias (or login) name
+          example:
+            jtestersen or jtestersen@test.com (means e.g. John von Testersen)
+        password:
+          type: string
+          description: User's password for login
+          example: $tR0nG_pA55vv0Rd

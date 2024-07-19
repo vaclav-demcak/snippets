@@ -1,0 +1,119 @@
+/*
+ *  ↄ⃝ COPYLEFT 2020 ALL BUGS RESERVED by ZaJo.
+ */
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'org.springframework.boot' version '2.5.9'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.openapi.generator' version '5.4.0'
+}
+
+description = 'SpringBoot Security Sample'
+group = 'vd.sandbox.spring'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+def gitCommitHash = 'git rev-parse --verify HEAD'.execute().text.trim()
+def buildUser = System.properties['user.name']
+
+springBoot {
+    buildInfo{
+        properties {
+            additional = [
+                    'git.hash': "${gitCommitHash}",
+                    'builded.by': "${buildUser}"
+            ]
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+configurations.all {
+    exclude group: 'org.slf4j', module: 'slf4j-simple'
+}
+
+dependencies {
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.13.0'
+    implementation("org.springframework.boot:spring-boot-starter-web") {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+
+    api("org.openapitools:jackson-databind-nullable:0.1.0")
+    api("org.springdoc:springdoc-openapi-ui:1.5.9")
+    api("org.springdoc:springdoc-openapi-data-rest:1.5.9")
+    api("org.springdoc:springdoc-openapi-security:1.5.9")
+
+    implementation("org.springframework.boot:spring-boot-starter-security") {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+
+//    implementation("org.springframework.security:spring-security-web:5.6.1")
+//    implementation("org.springframework.security:spring-security-config:5.6.1")
+
+//    implementation("org.springframework.security:spring-security-jwt:1.1.1.RELEASE")
+//    implementation("org.springframework.security.oauth:spring-security-oauth2:2.5.1.RELEASE")
+
+    implementation("org.springframework.boot:spring-boot-starter-log4j2")
+    implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.7.3')
+    implementation('com.fasterxml.jackson.module:jackson-module-kotlin:2.7.3')
+
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+task buildSpring(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+    generatorName = "spring"
+    library = 'spring-boot'
+    inputSpec = "$projectDir/api-definition/api.yml".toString()
+    outputDir = "$buildDir/spring".toString()
+    apiPackage = "vd.sandbox.spring.openapi.aaa.api"
+    invokerPackage = "vd.sandbox.spring.openapi.aaa.invoker"
+    modelPackage = "vd.sandbox.spring.openapi.aaa.model"
+    modelNameSuffix = 'Dto'
+    ignoreFileOverride = "$projectDir/.openapi-generator-ignore".toString()
+    configOptions = [
+            annotationLibrary      : 'swagger2',
+            configPackage          : 'vd.sandbox.spring.openapi.aaa',
+            dateLibrary            : 'java8',
+            java8                  : 'true',
+            hideGenerationTimestamp: 'true',
+            useTags                : 'true',
+            useBeanValidation      : 'false',
+            delegatePattern        : "false",
+            hideGenerationTimestamp: "true",
+            additionalModelTypeAnnotations: ';@lombok.Builder;@lombok.AllArgsConstructor;@lombok.NoArgsConstructor;@lombok.Setter;@lombok.Getter'
+    ]
+//    systemProperties = [
+//            modelDocs: "false"
+//    ]
+    auth = "Authorization:Basic%20dXNlcjp1c2Vy"
+    skipValidateSpec = true
+    logToStderr = true
+    generateAliasAsModel = false
+    // set to true and set environment variable {LANG}_POST_PROCESS_FILE
+    // (e.g. SCALA_POST_PROCESS_FILE) to the linter/formatter to be processed.
+    // This command will be passed one file at a time for most supported post processors.
+    enablePostProcessFile = false
+}
+
+compileJava.dependsOn(buildSpring)
+
+sourceSets {
+    getByName("main") {
+        java {
+            srcDir("$buildDir/spring/src/main/java")
+        }
+        resources {
+            srcDir("$buildDir/spring/src/main/resources")
+        }
+    }
+}

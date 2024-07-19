@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+  activemq:
+    image: "rmohr/activemq"
+    container_name: sample-activemq
+    networks:
+      - sample-local-network
+    ports:
+      - 61616:61616
+      - 8161:8161
+    environment:
+      ACTIVEMQ_OPTS: "-Xms2g -Xmx3g"
+networks:
+  sample-local-network:
+    driver: bridge

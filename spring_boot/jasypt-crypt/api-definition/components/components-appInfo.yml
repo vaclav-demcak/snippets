@@ -1,0 +1,32 @@
+# This OpenAPI file is fragment and should not be distributed separately
+
+openapi: 3.0.3
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+paths: { /: {get: {responses: { "418": { description: FRAGMENT } } } } }
+
+components:
+  schemas:
+    ApplicationBuildInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Meno Aplikacie
+        version:
+          type: string
+          description: Verzia Aplikacie
+        buildedIn:
+          type: string
+          description: Datum a cas buildovania
+        arifactGroup:
+          type: string
+          description: Group-a Artefaktu Repozitara
+        artifactName:
+          type: string
+          description: Meno Artefaktu Repozitara
+        gitHash:
+          type: string
+          description: GIT HASH pre identifikaciu zdroja distribucie
+        userName:
+          type: string
+          description: Meno uzivatela ktory vytvoril build

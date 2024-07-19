@@ -1,0 +1,52 @@
+openapi: 3.0.2
+info:
+  title: API Documentation
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/
+tags:
+  - name: Users
+paths:
+  /users:
+    summary: Provides access to available users
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      responses:
+        200:
+          description: Returns all users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '../components/users.yml#/components/schemas/UserResponse'
+    post:
+      tags:
+        - Users
+      summary: Create user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../components/users.yml#/components/schemas/CreateUserRequest'
+      responses:
+        201:
+          description: New user created
+          content:
+            application/json:
+              schema:
+                $ref: '../components/users.yml#/components/schemas/UserResponse'
+    put:
+      tags:
+        - Users
+      summary: Update user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../components/users.yml#/components/schemas/User'
+      responses:
+        200:
+          description: Update sucessfull

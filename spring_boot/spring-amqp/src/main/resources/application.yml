@@ -1,0 +1,21 @@
+server:
+  port: 8080
+spring:
+#  jms:
+#    pub-sub-domain: true
+#    cache:
+#      enabled: false # see: https://github.com/spring-projects/spring-boot/issues/19565
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admi
+    password: admin
+    notif-queue: notif_queue
+    notif-topic: notif_topic
+    server-queue: test_server_queue
+    client-queue: test_client_queue
+    topic: test_topic
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs

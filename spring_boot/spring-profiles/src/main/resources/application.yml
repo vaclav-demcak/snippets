@@ -1,0 +1,10 @@
+spring:
+  application.name: SpringBoot Profile Sample
+  profiles.active: foo
+#spring.profiles.active: local
+helloMessage: "Hello Default!"
+
+logging.level.vd.samples: DEBUG
+
+database-url: "INVALID!"
+mock.enabled: false

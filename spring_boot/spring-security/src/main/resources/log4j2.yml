@@ -1,0 +1,42 @@
+Configuration:
+  status: warn
+
+  appenders:
+    Console:
+      name: LogToConsole
+      PatternLayout:
+        Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+
+    #File:
+    #  name: File
+    #  fileName: logs/sandbox-api-generator/app.log
+    #  PatternLayout:
+    #    Pattern: "%d %p %C{1.} [%t] %m%n"
+
+    RollingFile:
+      - name: LogToRollingFile
+        fileName: logs/sandbox-api-generator/app.log
+        filePattern: "logs/sandbox-api-generator/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz"
+        PatternLayout:
+          pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+        Policies:
+          OnStartupTriggeringPolicy:
+          SizeBasedTriggeringPolicy:
+            size: 1MB
+        DefaultRollOverStrategy:
+          max: 10
+
+  Loggers:
+    logger:
+      - name: vd.sandbox.spring.openapi
+        level: debug
+        additivity: false
+        AppenderRef:
+          - ref: LogToConsole
+          - ref: LogToRollingFile
+
+    Root:
+      level: warn
+      AppenderRef:
+        - ref: LogToConsole
+        - ref: LogToRollingFile

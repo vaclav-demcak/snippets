@@ -1,0 +1,38 @@
+# This OpenAPI file is fragment and should not be distributed separately
+openapi: 3.0.3
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+
+tags:
+  - name: AppInfo
+    description: Base Application info REST service
+
+paths:
+  /app-info/buildUser:
+    get:
+      tags:
+        - AppInfo
+      operationId: buildUserInfo
+      summary: brm
+      description: brm brm
+      responses:
+        '200':
+          description: Brm build
+          content:
+            application/json:
+              schema:
+                $ref: "../components/app-components-appInfo.yml#/components/schemas/ApplicationBuildInfoResponse"
+  /app-info/buildInfo:
+    get:
+      tags:
+        - AppInfo
+      operationId: buildInfo
+      summary: Returns Build  Application infoz
+      description: Service works as Ping-Pong service to be shure then service is ON, but response contains some
+        additional information about a current server version, a build server timemark atd.
+      responses:
+        '200':
+          description: Build Server info
+          content:
+            application/json:
+              schema:
+                $ref: '../components/app-components-appInfo.yml#/components/schemas/ApplicationBuildInfo'

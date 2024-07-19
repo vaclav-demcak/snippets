@@ -1,0 +1,81 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /oracle
+
+logging:
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+  level:
+    root: INFO
+    vd.samples: DEBUG
+
+cors:
+  allow:
+    all:
+      origins: true
+
+# Date time settings
+cp:
+  datetime:
+    default:
+      zone: Europe/Bratislava
+    validity:
+      interval:
+        months: 12
+
+##
+## Liquibase
+##
+spring:
+  application:
+    name: Oracle Sample
+  liquibase:
+    enabled: true
+#    contexts: prod,dev
+#    change-log: classpath:liquibase/liquibase-change-log.yaml
+    change-log: classpath:liquibase/liquibase-changelog-master.xml
+    drop-first: false # Nastavit na true v pripade, ze treba vymazat databazu
+  jasypt:
+    passphrase: acg_pass_phrase_env_creation
+  jpa:
+    hibertnate:
+#      ddl-auto: update
+      ddl-auto: none
+      show-sql: true
+    open-in-view: false
+    database-platform: org.hibernate.dialect.Oracle12cDialect
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+  ## Spring DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+  datasource:
+#    hikari:
+#      connection-timeout: 30000
+#      idle-timeout: 600000
+#      max-lifetime: 1800000
+#      maximum-pool-size: 10
+#    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: oracle.jdbc.OracleDriver
+#    url: jdbc:oracle:thin:@//dev19db.teran.sk:1521:ais19 # jdbc:oracle:thin:@<IP>:1521:<SID>
+    # Hikari Default OJDBC TNS is :
+      # jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=hostA)(PORT=1522))(ADDRESS=(PROTOCOL=TCP)(HOST=hostB)(PORT=1521)))(SOURCE_ROUTE=yes)(CONNECT_DATA=(SERVICE_NAME=DatabaseService)))
+#    url: jdbc:oracle:thin:@//dev19db.teran.sk:1521/ais19 # jdbc:oracle:thin:@<IP>:1521/<ServiceName>
+    url: jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS_LIST =(ADDRESS =(PROTOCOL=TCP)(HOST=dev19db.teran.sk)(PORT=1521)))(CONNECT_DATA=(SID=aisr19)(SERVER=DEDICATED))) # Own TNS
+#    username: sisk_dev_acg
+#    password: Kbpb1nr
+    username: ENC(frxMLvHVc3F62uIKfT5jzH0Bw/wT8D5D)
+    password: ENC(Nz3IIyUiYJ9ANlvRAyiHuQ==)
+
+#  main:
+#    allow-bean-definition-overriding: true
+#    lazy-initialization: true
+
+#spring:
+#  jackson:
+#    date-format: vd.sandbox.spring.jpa.invoker.RFC3339DateFormat
+#    serialization:
+#      WRITE_DATES_AS_TIMESTAMPS: false
+

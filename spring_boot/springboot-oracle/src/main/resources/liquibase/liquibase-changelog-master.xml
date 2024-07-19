@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+<!--    <include file="/changeset/V1_0__ACG_DB_init.sql" relativeToChangelogFile="true" />-->
+<!--    <include file="/changeset/V1_1__Spracovanie_Zmien.sql" relativeToChangelogFile="true" />-->
+<!--    <include file="/changeset/V1_2__AdresyOsob.sql" relativeToChangelogFile="true" />-->
+
+
+<!--    <changeSet id="2" author="vdemcak">-->
+<!--        <sqlFile dbms="oracle" endDelimiter=";/" path="/V1_1__Spracovanie_Zmien.sql"-->
+<!--          relativeToChangelogFile="true" splitStatements="true" stripComments="true" />-->
+<!--    </changeSet>-->
+<!--    <changeSet id="2" author="vdemcak">-->
+<!--        <sqlFile dbms="oracle" endDelimiter=";\\s*$" path="/V1_1__Spracovanie_Zmien.sql"-->
+<!--          relativeToChangelogFile="true" splitStatements="true" stripComments="true" />-->
+<!--    </changeSet>-->
+
+<!--    <changeSet id="1" author="vdemcak">-->
+<!--        <sqlFile dbms="oracle" endDelimiter=";/" path="/V1_0__ACG_DB_init.sql"-->
+<!--          relativeToChangelogFile="true" splitStatements="false" stripComments="true" />-->
+<!--    </changeSet>-->
+<!--    <changeSet id="2" author="vdemcak">-->
+<!--        <sqlFile dbms="oracle" endDelimiter="(;\n\n|\/)" path="/V1_1__Spracovanie_Zmien.sql"-->
+<!--          relativeToChangelogFile="true" splitStatements="false" stripComments="true" />-->
+<!--    </changeSet>-->
+<!--    <changeSet id="3" author="vdemcak">-->
+<!--        <sqlFile dbms="oracle" endDelimiter=";" path="/V1_2__AdresyOsob.sql"-->
+<!--          relativeToChangelogFile="true" splitStatements="false" stripComments="false" />-->
+<!--    </changeSet>-->
+
+
+</databaseChangeLog>

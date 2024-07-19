@@ -1,0 +1,52 @@
+# This OpenAPI file is fragment and should not be distributed separately
+
+openapi: 3.0.3
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+
+tags:
+  - name: guest
+    description: Guest avaliable Servises
+
+paths:
+  /info:
+    get:
+      tags:
+        - guest
+      operationId: info
+      summary: Vrati informacie o aktualnej verzii applikacie
+      description: Vsetky dolezite informacie budu obsiahnute v Respone objekte
+      responses:
+        '200':
+          description: Informacie o aktalnej nasadenej verzii aplikacie
+          content:
+            application/json:
+              schema:
+                $ref: '../components/aaa-components.yml#/components/schemas/ApplicationInfo'
+        '400':
+          $ref: '../components/aaa-security.yml#/components/responses/400_BadRequestError'
+        '401':
+          $ref: '../components/aaa-security.yml#/components/responses/401_UnauthorizedError'
+        '404':
+          $ref: '../components/aaa-security.yml#/components/responses/404_NotFound'
+        default:
+          description: Something is wrong
+  /welcome:
+    get:
+      tags:
+        - guest
+      operationId: welcome
+      responses:
+        '200':
+          description: Overenie funknosti profilu
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          $ref: '../components/aaa-security.yml#/components/responses/400_BadRequestError'
+        '401':
+          $ref: '../components/aaa-security.yml#/components/responses/401_UnauthorizedError'
+        '404':
+          $ref: '../components/aaa-security.yml#/components/responses/404_NotFound'
+        default:
+          description: Something is wrong

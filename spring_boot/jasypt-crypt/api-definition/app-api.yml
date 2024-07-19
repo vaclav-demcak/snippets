@@ -1,0 +1,18 @@
+openapi: 3.0.3
+info:
+  title: Spring JPA Sample User API Documentation
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/
+
+paths:
+  /v1/info:
+    $ref: 'services/services-appInfo.yml#/paths/~1app-info~1buildInfo'
+  /v1/users:
+    $ref: 'services/services-user.yml#/paths/~1users'
+  /v1/users/{userName}:
+    $ref: 'services/services-user.yml#/paths/~1users~1{firstName}'
+  /v1/cryptUserCredentials/encrypt:
+    $ref: 'services/services-crypt.yml#/paths/~1cryptUserCredentials~1encrypt'
+  /v1/cryptUserCredentials/decrypt:
+    $ref: 'services/services-crypt.yml#/paths/~1cryptUserCredentials~1decrypt'

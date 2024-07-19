@@ -1,0 +1,6 @@
+databaseChangeLog:
+  - preConditions: # see more: preConditions statement https://docs.liquibase.com/concepts/changelogs/preconditions.html
+      onFail: HALT
+      onError: HALT
+  - includeAll : # see more: includeAll statement https://docs.liquibase.com/change-types/includeall.html
+      path: liquibase/data/changeset

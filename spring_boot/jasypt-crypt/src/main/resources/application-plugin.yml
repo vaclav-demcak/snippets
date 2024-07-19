@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/javatechie
+    username: root
+    password: ENC(qZteycXsmvwotD/s1AbKeanpj3HoZOwsVKVme67k7eiyZjDy2W+dLIunhXC+3US5)
+
+test:
+  crypt:
+    username: Testerson
+    password: ENC(RIjsrnwGEKJiyC44E/ci53pp2uKoiAAKBJVprteLqx2sqImKYDoq4BBeOQi1JTh+)
+#    password: password

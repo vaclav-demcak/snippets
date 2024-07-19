@@ -1,0 +1,41 @@
+/*
+ *  ↄ⃝ COPYLEFT 2020 ALL BUGS RESERVED by ZaJo.
+ */
+plugins {
+    id 'war'
+    id 'java'
+    id 'org.springframework.boot' version '2.2.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+}
+
+description = 'SpringBoot Base Sample'
+group = 'vd.sandbox.spring'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+//Odkomentovat pre pouzivanie log4j2
+//configurations.all {
+//    exclude group: 'org.slf4j', module: 'slf4j-simple'
+//}
+
+dependencies {
+//    zakomentovat pre pouzivanie log4j2
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+
+//    odkomentovat pre pouzivanie log4j2
+//    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.13.0'
+//    implementation("org.springframework.boot:spring-boot-starter-web") {
+//        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+//    }
+//    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.7.3')
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}

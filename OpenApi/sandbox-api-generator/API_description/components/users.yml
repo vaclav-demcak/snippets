@@ -1,0 +1,46 @@
+# This OpenAPI file is fragment and should not be distributed separately
+
+openapi: "3.0.2"
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+paths: { /: { get: { responses: { "418": { description: FRAGMENT } } } } }
+
+components:
+  schemas:
+    CreateUserRequest:
+      title: CreateUserResponse
+      required:
+        - username
+        - password
+      type: object
+      properties:
+        username:
+          type: string
+          description: Users's username
+          example: example@test.com
+        password:
+          type: string
+          description: User's password
+          example: $tR0nG_pA55vv0Rd
+    UserResponse:
+      title: UserResponse
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          required:
+            - id
+            - username
+    User:
+      title: User
+      required:
+        - id
+        - username
+      type: object
+      properties:
+        id:
+          type: string
+          description: Users's identifier
+          example: "1"
+        username:
+          type: string
+          description: Users's username
+          example: example@test.com

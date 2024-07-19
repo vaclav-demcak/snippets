@@ -1,2 +1,2 @@
-# snipets
-personal snipet-s projects
+# snippets
+personal snippet-s projects

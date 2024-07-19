@@ -1,0 +1,19 @@
+version: '3.8'
+services: 
+  logstash:
+    # image: docker.elastic.co/logstash/logstash:8.14.1
+    image: docker.elastic.co/logstash/logstash:7.17.22
+    container_name: logstash
+    user: root
+    # environment:
+    #   - xpack.monitoring.enabled=false
+    volumes:
+      - ./config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+      # - ./pipeline:/usr/share/logstash/pipeline:ro,Z
+      # - ./pipeline/pipeline.yml:/usr/share/logstash/pipeline/pipeline.yml:ro,Z
+      - ./pipeline/greycortext.conf:/usr/share/logstash/pipeline/greycortext.conf:ro,Z
+      - ./input:/usr/share/logstash/data/input:ro
+      - ./output:/usr/share/logstash/data/output:rw
+    command: logstash -r -f /usr/share/logstash/pipeline/greycortext.conf
+    ports:
+      - "5044:5044"

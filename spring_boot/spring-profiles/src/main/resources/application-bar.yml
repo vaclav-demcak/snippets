@@ -1,0 +1,8 @@
+helloMessage: "Hello Bar!"
+
+test.path:
+  subpath1: propFileValue_1
+  subpath2: propFileValue_2
+
+
+test.reference.key: ${spring.application.name}
