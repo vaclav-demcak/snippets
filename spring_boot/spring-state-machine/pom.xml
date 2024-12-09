@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ *  ↄ⃝ COPYLEFT 2023 ALL BUGS RESERVED by ZaJo
+ *
+ *  Author: vaclav.demcak@gmail.com
+ */
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>vd.springboot.samples</groupId>
+    <artifactId>springboot-state-machine</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <name>SpringBoot State-Machine Sample</name>
+    <description>SpringBoot State-Machine Sample (playground)</description>
+
+
+    <properties>
+	<!-- Source Encoding -->
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    	<!-- Java Version -->
+    	<jdk.version>17</jdk.version>
+    	<maven.compiler.source>${jdk.version}</maven.compiler.source>
+    	<maven.compiler.target>${jdk.version}</maven.compiler.target>
+
+        <build-helper-maven-plugin.version>3.6.0</build-helper-maven-plugin.version>
+
+    	<!-- SpringBoot -->
+    	<SpringBoot_Main_Class>vd.samples.springboot.statemachine._Runner</SpringBoot_Main_Class>
+
+    	<spring.boot.dependencies.version>3.4.0</spring.boot.dependencies.version>
+    	<spring.boot.plugin.version>${spring.boot.dependencies.version}</spring.boot.plugin.version>
+
+        <spring.framework.statemachine.version>4.0.0</spring.framework.statemachine.version>
+
+        <springdoc-openapi-maven-plugin.version>1.4</springdoc-openapi-maven-plugin.version>
+        <springdoc-openapi-starter-web.version>2.7.0</springdoc-openapi-starter-web.version>
+        <springdoc.openapi.version>1.8.0</springdoc.openapi.version>
+
+        <openapi-gen.version>7.10.0</openapi-gen.version>
+        <openapi.tools.version>0.2.6</openapi.tools.version>
+        <openapi.gen.base.package.name>vd.samples.springboot.statemachine</openapi.gen.base.package.name>
+
+    </properties>
+
+    <build>
+        <plugins>
+            <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/build-helper-maven-plugin -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build-helper-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/swagger</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-maven-plugin -->
+            <plugin>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <jvmArguments>
+                        -Dspringdoc.writer-with-default-pretty-printer=true
+                    </jvmArguments>
+                    <mainClass>${SpringBoot_Main_Class}</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                        <id>build-info</id>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <groupId>org.springframework.boot</groupId>
+                <version>${spring.boot.plugin.version}</version>
+            </plugin>
+            <!-- https://mvnrepository.com/artifact/org.openapitools/openapi-generator-maven-plugin -->
+            <plugin>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <groupId>org.openapitools</groupId>
+                <version>${openapi-gen.version}</version>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <!-- https://openapi-generator.tech/docs/generators/spring -->
+                            <additionalProperties>
+                                <additionalProperty>serviceInterface=true</additionalProperty>
+                                <additionalProperty>serviceImplementation=false</additionalProperty>
+                                <additionalProperty>swaggerAnnotations=true</additionalProperty>
+                                <additionalProperty>enumPropertyNaming=UPPERCASE</additionalProperty>
+                                <additionalProperty>useBeanValidation=true</additionalProperty>
+                            </additionalProperties>
+                            <!--              https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-maven-plugin/src/main/java/org/openapitools/codegen/plugin/CodeGenMojo.java -->
+                            <openapiNormalizer>REF_AS_PARENT_IN_ALLOF=true</openapiNormalizer>
+                            <apiPackage>${openapi.gen.base.package.name}.api</apiPackage>
+                            <configOptions>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <interfaceOnly>true</interfaceOnly>
+                                <oa3>true</oa3>
+                                <sourceFolder>swagger</sourceFolder>
+                                <unhandledException>true</unhandledException>
+                                <useOneOfInterfaces>true</useOneOfInterfaces>
+                                <useSpringController>true</useSpringController>
+                                <useSpringfox>false</useSpringfox>
+                                <useTags>true</useTags>
+                                <!--                <java8>true</java8>-->
+                                <!--                <dateLibrary>java8</dateLibrary>-->
+                            </configOptions>
+
+                            <ignoreFileOverride>${project.basedir}/.openapi-generator-ignore</ignoreFileOverride>
+                            <generateApiDocumentation>true</generateApiDocumentation>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelDocumentation>true</generateModelDocumentation>
+
+                            <!--              <templateDirectory>${project.basedir}/api-definition/JavaSpring</templateDirectory>-->
+                            <generateModelTests>false</generateModelTests>
+                            <generateSupportingFiles>true</generateSupportingFiles>
+                            <generatorName>spring</generatorName>
+                            <inputSpec>${project.basedir}/api-definition/app-api.yml</inputSpec>
+                            <modelNameSuffix>Dto</modelNameSuffix>
+                            <!--              TODO: change for true in future-->
+                            <modelPackage>${openapi.gen.base.package.name}.model</modelPackage>
+                            <output>${project.build.directory}</output>
+                            <packageName>${openapi.gen.base.package.name}</packageName>
+
+                            <skipIfSpecIsUnchanged>false</skipIfSpecIsUnchanged>
+
+                            <skipOverwrite>false</skipOverwrite>
+
+                        </configuration>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <id>gen_sample-rest-api</id>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+    	<dependencies>
+      		<!-- Base SpringBoot Parent -->
+      		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies -->
+      		<dependency>
+        		<artifactId>spring-boot-dependencies</artifactId>
+        		<groupId>org.springframework.boot</groupId>
+        		<scope>import</scope>
+        		<type>pom</type>
+        		<version>${spring.boot.dependencies.version}</version>
+      		</dependency>
+            <!-- OpenAPI 3 Doc -->
+            <dependency>
+                <artifactId>springdoc-openapi</artifactId>
+                <groupId>org.springdoc</groupId>
+                <scope>import</scope>
+                <type>pom</type>
+                <version>${springdoc.openapi.version}</version>
+            </dependency>
+    	</dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.springframework.statemachine/spring-statemachine-core -->
+        <dependency>
+            <groupId>org.springframework.statemachine</groupId>
+            <artifactId>spring-statemachine-core</artifactId>
+            <version>${spring.framework.statemachine.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi-starter-web.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-api -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+            <version>${springdoc-openapi-starter-web.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-autoconfigure</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-configuration-processor</artifactId>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- OpenAPI tools -->
+        <!-- https://mvnrepository.com/artifact/org.openapitools/jackson-databind-nullable -->
+        <dependency>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <groupId>org.openapitools</groupId>
+            <version>${openapi.tools.version}</version>
+        </dependency>
+    </dependencies>
+</project>

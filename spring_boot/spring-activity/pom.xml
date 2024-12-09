@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ *  ↄ⃝ COPYLEFT 2023 ALL BUGS RESERVED by ZaJo
+ *
+ *  Author: vaclav.demcak@gmail.com
+ */
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>vd.springboot.samples</groupId>
+    <artifactId>springboot-activity</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <name>SpringBoot Activity Sample</name>
+    <description>SpringBoot Activity Sample (playground)</description>
+
+
+    <properties>
+	<!-- Source Encoding -->
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    	<!-- Java Version -->
+    	<jdk.version>17</jdk.version>
+    	<maven.compiler.source>${jdk.version}</maven.compiler.source>
+    	<maven.compiler.target>${jdk.version}</maven.compiler.target>
+
+    	<!-- SpringBoot -->
+    	<SpringBoot_Main_Class>vd.samples.springboot.activity._Runner</SpringBoot_Main_Class>
+
+    	<spring.boot.dependencies.version>3.4.0</spring.boot.dependencies.version>
+    	<spring.boot.plugin.version>${spring.boot.dependencies.version}</spring.boot.plugin.version>
+
+<!--        <spring.activity.starter.version>6.0.0</spring.activity.starter.version>-->
+        <spring.activity.starter.version>8.6.0</spring.activity.starter.version>
+        <mysql.connector.version>9.1.0</mysql.connector.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>activiti-releases</id>
+            <url>https://artifacts.alfresco.com/nexus/content/repositories/activiti-releases</url>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+    	<dependencies>
+      		<!-- Base SpringBoot Parent -->
+      		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies -->
+      		<dependency>
+        		<artifactId>spring-boot-dependencies</artifactId>
+        		<groupId>org.springframework.boot</groupId>
+        		<scope>import</scope>
+        		<type>pom</type>
+        		<version>${spring.boot.dependencies.version}</version>
+      		</dependency>
+    	</dependencies>
+  </dependencyManagement>
+
+    <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/org.activiti/activiti-spring-boot-starter -->
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring-boot-starter</artifactId>
+            <version>${spring.activity.starter.version}</version>
+        </dependency>
+
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.activiti/activiti-spring-boot-starter-basic &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.activiti</groupId>-->
+<!--            <artifactId>activiti-spring-boot-starter-basic</artifactId>-->
+<!--            <version>${spring.activity.starter.version}</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.mysql/mysql-connector-j &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.mysql</groupId>-->
+<!--            <artifactId>mysql-connector-j</artifactId>-->
+<!--            <version>${mysql.connector.version}</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+    </dependencies>
+</project>
