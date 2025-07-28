@@ -1,0 +1,19 @@
+openapi: 3.0.3
+info:
+  title: API Application Info Services Documentation
+  description: Swagger dokumentacia k Servisom
+  version: 1.0.0
+servers:
+  - url: http://localhost:8989/vd-samples/app-info
+    description: API for Spring Sample Services Documentation
+
+paths:
+  /v1/app-info/buildInfo:
+    $ref: 'services/app-info-api.yml#/paths/~1app-info~1buildInfo'
+  /v1/app-info/buildUser:
+    $ref: 'services/app-info-api.yml#/paths/~1app-info~1buildUser'
+  
+#  /admin/services/info:
+#    $ref: 'services/aaa-admin.yml#/paths/~1info'
+#  /admin/services/welcome:
+#    $ref: 'services/aaa-admin.yml#/paths/~1welcome'
