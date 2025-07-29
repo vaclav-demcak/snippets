@@ -1,0 +1,35 @@
+server:
+  port: 8989
+  servlet:
+    contextPath: /vd-samples
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  application:
+    name: EdiSpringBoot
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/booking
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:password987}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 15MB
+      location: /var/tmp/uploads
+#      location: uploads
+
+springdoc:
+  # swagger-ui custom path
+  swagger-ui:
+    path: /swagger-ui.html
+    csrf:
+      enabled: true

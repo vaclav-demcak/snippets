@@ -1,0 +1,30 @@
+# This OpenAPI file is fragment and should not be distributed separately
+
+openapi: 3.0.3
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+paths: { /: {get: {responses: { "418": { description: FRAGMENT } } } } }
+
+components:
+  schemas:
+    UserIdent:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The unique User ID in DB
+    User:
+      type: object
+      required:
+        - user_name
+        - user_pwd
+      properties:
+        user_id:
+          $ref: '#/components/schemas/UserIdent'
+        user_name:
+          type: string
+          format: email
+          description: The unique user name in email form
+        user_pwd:
+          type: string
+          description: The user password

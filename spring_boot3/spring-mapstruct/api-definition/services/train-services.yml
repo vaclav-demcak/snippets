@@ -1,0 +1,115 @@
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+
+tags:
+  - name: TrainServices
+    description: Base Application Train REST service
+
+paths:
+  /{id}:
+    get:
+      tags:
+        - TrainServices
+      summary: Get train by ID
+      operationId: getTrainById
+      parameters:
+        - name: id
+          in: path
+          description: Train ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Successful operation GetByID
+          content:
+            application/json:
+              schema:
+                $ref: '../components/train-components.yml#/components/schemas/Train'
+        400:
+          $ref: '../components/app-components-common.yml#/components/responses/400_BadRequestError'
+
+    put:
+      tags:
+        - TrainServices
+      summary: Update train for traveling
+      operationId: updateTrain
+      requestBody:
+        required: true
+        description: Create new Train for Traveling Services
+        content:
+          application/json:
+            schema:
+              $ref: '../components/train-components.yml#/components/schemas/Train'
+      responses:
+        200:
+          description: Successful operation update Train
+        400:
+          $ref: '../components/app-components-common.yml#/components/responses/400_BadRequestError'
+
+    delete:
+      tags:
+        - TrainServices
+      summary: Delete train by ID
+      operationId: deleteTrainById
+      parameters:
+        - name: id
+          in: path
+          description: Train ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Successful operation delete Train
+        400:
+          $ref: '../components/app-components-common.yml#/components/responses/400_BadRequestError'
+
+  /create:
+    post:
+      tags:
+        - TrainServices
+      summary: Crete train for traveling
+      operationId: createTrain
+      requestBody:
+        required: true
+        description: Create new Train for Traveling Services
+        content:
+          application/json:
+            schema:
+              $ref: '../components/train-components.yml#/components/schemas/Train'
+      responses:
+        201:
+          description: Upload session initiated
+          content:
+            application/json:
+              schema:
+                $ref: '../components/train-components.yml#/components/schemas/TrainIdent'
+        400:
+          $ref: '../components/app-components-common.yml#/components/responses/400_BadRequestError'
+
+  /find:
+    post:
+      tags:
+        - TrainServices
+      summary: Find train for traveling
+      operationId: findTrain
+      requestBody:
+        description: Find Train for Traveling Services
+        content:
+          application/json:
+            schema:
+              $ref: '../components/train-components.yml#/components/schemas/Train'
+      responses:
+        200:
+          description: Upload session initiated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: '../components/train-components.yml#/components/schemas/Train'
+        400:
+          $ref: '../components/app-components-common.yml#/components/responses/400_BadRequestError'

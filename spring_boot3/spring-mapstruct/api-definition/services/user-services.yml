@@ -1,0 +1,91 @@
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+
+tags:
+  - name: UserServices
+    description: Base Application user REST service
+
+paths:
+  /{id}:
+    get:
+      tags:
+        - UserServices
+      summary: Get user by ID
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Successful operation GetByID
+          content:
+            application/json:
+              schema:
+                $ref: '../components/user-components.yml#/components/schemas/User'
+        400:
+          $ref: '../components/app-components-common.yml#/components/responses/400_BadRequestError'
+
+    put:
+      tags:
+        - UserServices
+      summary: Update user for traveling
+      operationId: updateUser
+      requestBody:
+        required: true
+        description: Create new User for Traveling Services
+        content:
+          application/json:
+            schema:
+              $ref: '../components/user-components.yml#/components/schemas/User'
+      responses:
+        200:
+          description: Successful operation update User
+        400:
+          $ref: '../components/app-components-common.yml#/components/responses/400_BadRequestError'
+
+    delete:
+      tags:
+        - UserServices
+      summary: Delete user by ID
+      operationId: deleteUserById
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Successful operation delete User
+        400:
+          $ref: '../components/app-components-common.yml#/components/responses/400_BadRequestError'
+
+  /create:
+    post:
+      tags:
+        - UserServices
+      summary: Crete user for traveling
+      operationId: createUser
+      requestBody:
+        required: true
+        description: Create new User for Traveling Services
+        content:
+          application/json:
+            schema:
+              $ref: '../components/user-components.yml#/components/schemas/User'
+      responses:
+        201:
+          description: Upload session initiated
+          content:
+            application/json:
+              schema:
+                $ref: '../components/user-components.yml#/components/schemas/UserIdent'
+        400:
+          $ref: '../components/app-components-common.yml#/components/responses/400_BadRequestError'
+

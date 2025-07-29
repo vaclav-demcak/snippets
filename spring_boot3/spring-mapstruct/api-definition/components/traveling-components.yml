@@ -1,0 +1,17 @@
+# This OpenAPI file is fragment and should not be distributed separately
+
+openapi: 3.0.3
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+paths: { /: {get: {responses: { "418": { description: FRAGMENT } } } } }
+
+components:
+  schemas:
+    InitUploadSession:
+      type: object
+      required:
+        - session_id
+      properties:
+        session_id:
+          type: string
+          description: The unique ID for the upload session
+

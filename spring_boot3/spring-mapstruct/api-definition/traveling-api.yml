@@ -1,0 +1,27 @@
+openapi: 3.0.3
+info:
+  title: API Traveling Services Documentation
+  description: Swagger dokumentacia k Servisom
+  version: 1.0.0
+servers:
+  - url: http://localhost:8989/vd-samples/traveling
+    description: API for edi Conversion Sample Services Documentation
+
+paths:
+  /v1/traveling/user/{id}:
+    $ref: 'services/user-services.yml#/paths/~1{id}'
+  /v1/traveling/user/create:
+    $ref: 'services/user-services.yml#/paths/~1create'
+  /v1/traveling/train/{id}:
+    $ref: 'services/train-services.yml#/paths/~1{id}'
+  /v1/traveling/train/create:
+    $ref: 'services/train-services.yml#/paths/~1create'
+  /v1/traveling/train/find:
+    $ref: 'services/train-services.yml#/paths/~1find'
+
+  /v1/traveling/ticket-upload/init:
+    $ref: 'services/traveling-services.yml#/paths/~1init'
+  /v1/traveling/ticket-upload/upload:
+    $ref: 'services/traveling-services.yml#/paths/~1upload'
+  /v1/traveling/ticket-uploadfinalize:
+    $ref: 'services/traveling-services.yml#/paths/~1finalize'

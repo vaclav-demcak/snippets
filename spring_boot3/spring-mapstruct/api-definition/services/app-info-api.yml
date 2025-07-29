@@ -1,0 +1,37 @@
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+
+tags:
+  - name: AppInfo
+    description: Base Application info REST service
+
+paths:
+  /app-info/buildUser:
+    get:
+      tags:
+        - AppInfo
+      operationId: buildUserInfo
+      summary: Build User information service
+      description: Take information about an user who has been created the current RUN-ed Application Image
+      responses:
+        '200':
+          description: Builder information service response
+          content:
+            application/json:
+              schema:
+                $ref: "../components/app-components-appInfo.yml#/components/schemas/ApplicationBuildInfoResponse"
+
+  /app-info/buildInfo:
+    get:
+      tags:
+        - AppInfo
+      operationId: buildInfo
+      summary: Returns Build Application info-ze
+      description: Service works as Ping-Pong service to be shure then service is ON, but response contains some
+                   additional information about a current server version, a build server timemark atd.
+      responses:
+        '200':
+          description: Build Server info
+          content:
+            application/json:
+              schema:
+                $ref: '../components/app-components-appInfo.yml#/components/schemas/ApplicationBuildInfo'
