@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import vd.sample.spring.mapstruct.entity.Passenger;
+import vd.sample.spring.mapstruct.repository.entity.Passenger;
 import vd.sample.spring.mapstruct.repository.PassengerRepository;
 import vd.sample.spring.mapstruct.repository.TrainRepository;
 
@@ -24,7 +24,7 @@ public class PassengerService {
     public void payForBus(String pageName, Long userId) {
 
         double linePrice = trainRepo.findByName(pageName).get(0).getLinePrice();
-//        passengerRepo.payForBusByIdAndBusName(pageName, linePrice, userId);
+//        passengerRepo.payForTrainByIdAndTrainName(pageName, linePrice, userId);
     }
 
     public double getCash(Long userId) {

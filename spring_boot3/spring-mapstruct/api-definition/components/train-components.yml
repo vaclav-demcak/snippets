@@ -1,0 +1,27 @@
+# This OpenAPI file is fragment and should not be distributed separately
+
+openapi: 3.0.3
+info: { title: "<FRAGMENT>", version: "<FRAGMENT>" }
+paths: { /: {get: {responses: { "418": { description: FRAGMENT } } } } }
+
+components:
+  schemas:
+    TrainIdent:
+      type: object
+      allOf:
+        - $ref: 'app-components-common.yml#/components/schemas/DbObjectIdent'
+    Train:
+      type: object
+      required:
+        - train_name
+        - line_price
+      properties:
+        train_id:
+          $ref: '#/components/schemas/TrainIdent'
+        train_name:
+          type: string
+          description: The unique train name
+        line_price:
+          type: integer
+          format: int64
+          description: The train line price

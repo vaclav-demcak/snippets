@@ -1,4 +1,4 @@
-package vd.sample.spring.mapstruct.entity;
+package vd.sample.spring.mapstruct.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,12 +7,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "passenger")
+public class Passenger {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
+    private long userId;
     private String name;
-    private String password;
-
+    private double price;
 }

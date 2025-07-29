@@ -3,7 +3,10 @@ package vd.sample.spring.mapstruct.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import vd.sample.spring.mapstruct.entity.User;
+import vd.sample.spring.mapstruct.model.UserIdentDto;
+import vd.sample.spring.mapstruct.repository.entity.User;
+import vd.sample.spring.mapstruct.service.mapper.UserMapper;
+import vd.sample.spring.mapstruct.model.UserDto;
 import vd.sample.spring.mapstruct.repository.UserRepository;
 
 import java.util.List;
@@ -22,8 +25,9 @@ public class UserService {
         return userRepo.findByUserName(userName);
     }
 
-    public void save(User user) {
-        userRepo.save(user);
+    public UserIdentDto save(UserDto user) {
+        User result = userRepo.save(UserMapper.INSTANCE.mapEntityFromDto(user));
+        return UserMapper.INSTANCE.mapDtoIdentFromEntity(result);
     }
 
     public List<User> getAll() {
@@ -34,7 +38,12 @@ public class UserService {
         return userRepo.getIdByEmail(email);
     }
 
-    public User getById(Long id) {
-        return userRepo.getUserById(id);
+    public UserDto getById(Long id) {
+        User user = userRepo.getUserById(id);
+        return UserMapper.INSTANCE.mapDtoFromEntity(user);
+    }
+
+    public void deleteById(Long id) {
+        userRepo.deleteById(id);
     }
 }

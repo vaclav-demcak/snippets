@@ -1,4 +1,4 @@
-package vd.sample.spring.mapstruct;
+package vd.sample.spring.mapstruct.config;
 
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;

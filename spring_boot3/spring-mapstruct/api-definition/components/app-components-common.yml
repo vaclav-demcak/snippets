@@ -6,6 +6,13 @@ paths: { /: {get: {responses: { "418": { description: FRAGMENT } } } } }
 
 components:
   schemas:
+    DbObjectIdent:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The unique object ID in DB
     Error:
       type: object
       required:

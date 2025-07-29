@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import vd.sample.spring.mapstruct.api.TravelingServicesApi;
+import vd.sample.spring.mapstruct.api.UserServicesApi;
 import vd.sample.spring.mapstruct.model.InitUploadSessionDto;
 
 import java.nio.file.Files;

@@ -1,4 +1,4 @@
-package vd.sample.spring.mapstruct;
+package vd.sample.spring.mapstruct.config;
 
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;

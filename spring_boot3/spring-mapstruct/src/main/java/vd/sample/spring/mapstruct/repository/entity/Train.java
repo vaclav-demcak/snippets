@@ -1,4 +1,4 @@
-package vd.sample.spring.mapstruct.entity;
+package vd.sample.spring.mapstruct.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
